@@ -12,9 +12,14 @@ class ApiPrefix(BaseModel):
     customers: str = "/customers"
 
 
+class CRMApiPrefix(BaseModel):
+    customers: str = "/customers"
+
+
 class RetailCRMConfig(BaseModel):
     api_base_url: str
     api_key: str
+    api: CRMApiPrefix = CRMApiPrefix()
 
 
 class Settings(BaseSettings):
