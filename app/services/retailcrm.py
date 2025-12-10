@@ -12,9 +12,14 @@ class RetailCRMClient:
             }
         )
 
-    async def get(self, path: str, params=None):
+    async def get(self, path: str, params=None) -> dict:
         url = f"{self.base_url}{path}"
         resp = await self.client.get(url, params=params)
+        return resp.json()
+
+    async def post(self, path: str, data=None) -> dict:
+        url = f"{self.base_url}{path}"
+        resp = await self.client.post(url, data=data)
         return resp.json()
 
 

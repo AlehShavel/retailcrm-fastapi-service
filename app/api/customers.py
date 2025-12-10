@@ -1,8 +1,10 @@
+import json
 from datetime import date
 
 from fastapi import APIRouter
 
 from core.config import settings
+from schemas.customers import CustomerCreate
 from services.retailcrm import crm
 
 router = APIRouter(prefix=settings.api.customers, tags=["Customers"])
@@ -29,3 +31,19 @@ async def get_customers(
     )
 
     return data.get("customers", [])
+
+
+@router.post("/")
+async def create_customer(
+    customer: CustomerCreate,
+) -> dict:
+    customer_data = {
+        "firstName": customer.firstName,
+        "lastName": customer.lastName,
+        "email": customer.email,
+        "phones": [
+            {"number": customer.phone},
+        ],
+    }
+    data = {"customer": json.dumps(customer_data)}
+    return await crm.post(path=f"{settings.crm.api.customers}/create", data=data)
