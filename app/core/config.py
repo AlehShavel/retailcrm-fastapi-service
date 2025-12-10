@@ -9,6 +9,12 @@ class RunConfig(BaseModel):
 
 class ApiPrefix(BaseModel):
     prefix: str = "/api"
+    customers: str = "/customers"
+
+
+class RetailCRMConfig(BaseModel):
+    api_base_url: str
+    api_key: str
 
 
 class Settings(BaseSettings):
@@ -19,6 +25,7 @@ class Settings(BaseSettings):
     )
     run: RunConfig = RunConfig()
     api: ApiPrefix = ApiPrefix()
+    crm: RetailCRMConfig
 
 
 settings = Settings()
