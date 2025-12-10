@@ -10,10 +10,12 @@ class RunConfig(BaseModel):
 class ApiPrefix(BaseModel):
     prefix: str = "/api"
     customers: str = "/customers"
+    orders: str = "/orders"
 
 
 class CRMApiPrefix(BaseModel):
     customers: str = "/customers"
+    orders: str = "/orders"
 
 
 class RetailCRMConfig(BaseModel):
