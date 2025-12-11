@@ -3,7 +3,7 @@ import json
 from fastapi import APIRouter
 
 from core.config import settings
-from schemas.orders import OrderCreate
+from schemas.orders import OrderCreate, PaymentCreate
 from services.retailcrm import crm
 
 router = APIRouter(prefix=settings.api.orders, tags=["Orders"])
@@ -32,3 +32,15 @@ async def create_order(order: OrderCreate) -> dict:
     }
     data = {"order": json.dumps(order_data)}
     return await crm.post(path=f"{settings.crm.api.orders}/create", data=data)
+
+
+@router.post("/payments/create")
+async def create_payment(payment: PaymentCreate) -> dict:
+    payment_data = {
+        "order": {"id": payment.order_id},
+        "amount": str(payment.amount),
+        "comment": payment.comment,
+        "type": payment.type,
+    }
+    data = {"payment": json.dumps(payment_data)}
+    return await crm.post(path=f"{settings.crm.api.orders}/payments/create", data=data)
